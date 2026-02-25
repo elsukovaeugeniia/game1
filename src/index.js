@@ -1,10 +1,15 @@
+// Константы для конфигурации игрового поля
+const FIELD_SIZE = 4; // Размер стороны квадратного игрового поля (4x4)
+const TOTAL_CELLS = FIELD_SIZE * FIELD_SIZE; // Общее количество клеток (16)
+const MAX_CELL_INDEX = TOTAL_CELLS - 1; // Максимальный индекс клетки (15)
+
 const gameField = document.getElementById('game-field');
 
 // Создаём игровое поле 4x4
-for (let i = 0; i < 16; i++) {
+for (let i = 0; i < TOTAL_CELLS; i++) {
   const cell = document.createElement('div');
   cell.className = 'cell';
-  gameField.appendChild(cell);
+  gameField.append(cell);
 }
 
 // Загружаем персонажа
@@ -33,8 +38,8 @@ function getRandomInt(min, max) {
 
 function placeCharacter() {
   const cells = document.querySelectorAll('.cell');
-  const randomCell = cells[getRandomInt(0, 15)];
-  randomCell.appendChild(characterImg);
+  const randomCell = cells[getRandomInt(0, MAX_CELL_INDEX)];
+  randomCell.append(characterImg);
 }
 
 if (characterImg.complete) {
@@ -47,13 +52,13 @@ setInterval(() => {
   let newCell;
 
   do {
-    newCell = cells[getRandomInt(0, 15)];
+    newCell = cells[getRandomInt(0, MAX_CELL_INDEX)];
   } while (currentCell && newCell === currentCell);
 
   if (newCell) {
-    newCell.appendChild(characterImg); // просто меняем родителя — без removeChild!
+    newCell.append(characterImg);
   }
-}, 2000);
+}, 1000);
 
 // Экспортируем для тестирования
 if (typeof module !== 'undefined' && module.exports) {
